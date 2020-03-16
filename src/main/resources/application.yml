@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /housing
+  port: 6969
+
+# Spring
+spring:
+  application:
+    name: housing
+  profiles:
+    active: dev
