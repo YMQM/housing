@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.ymqm.housing.dao.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="priv.ymqm.housing.domain.po.Permission">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="unique_key" property="uniqueKey" />
+        <result column="desc" property="desc" />
+        <result column="url" property="url" />
+        <result column="is_need_check" property="isNeedCheck" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+</mapper>
