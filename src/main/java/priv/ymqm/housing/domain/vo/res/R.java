@@ -1,6 +1,7 @@
 package priv.ymqm.housing.domain.vo.res;
 
 import priv.ymqm.housing.common.enums.RestApiResCodeEnum;
+
 import java.lang.reflect.Field;
 import java.util.Collections;
 
@@ -50,6 +51,12 @@ public class R<T> {
         return res;
     }
 
+    public static <T> R<T> error(String userMsg) {
+        R<T> res = error();
+        res.userMsg(userMsg);
+        return res;
+    }
+
     public static <T> R<T> error(RestApiResCodeEnum restApiResCodeEnum) {
         R<T> res = new R<>();
         res.code(restApiResCodeEnum.getCode());
@@ -92,7 +99,8 @@ public class R<T> {
         dataField.setAccessible(true);
         try {
             dataField.set(resInstance, data);
-        } catch (IllegalAccessException ignore) {
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
