@@ -10,6 +10,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import priv.ymqm.housing.common.group.Save;
+import priv.ymqm.housing.common.group.Update;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * <p>
@@ -28,38 +34,49 @@ public class Community extends Model<Community> {
 
     private static final long serialVersionUID=1L;
 
+    @Null(groups = Save.class)
+    @NotNull(groups = Update.class)
     @ApiModelProperty(value = "主键自增")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @ApiModelProperty(value = "小区唯一标识")
+    @ApiModelProperty(value = "小区唯一标识", hidden = true)
     private String uniqueKey;
 
+    @NotBlank(message = "小区名称不能为空")
     @ApiModelProperty(value = "小区名称")
     private String title;
 
+    @NotBlank
     @ApiModelProperty(value = "省份code")
     private String provinceCode;
 
+    @NotBlank
     @ApiModelProperty(value = "省份（一级行政区）名称")
     private String provinceName;
 
+    @NotBlank
     @ApiModelProperty(value = "市级行政区code")
     private String cityCode;
 
+    @NotBlank
     @ApiModelProperty(value = "市级行政区名称")
     private String cityName;
 
+    @NotBlank
     @ApiModelProperty(value = "县级行政区code")
     private String countyCode;
 
+    @NotBlank
     @ApiModelProperty(value = "县级行政区名称")
     private String countyName;
 
+    @NotBlank(message = "小区详细地址不能为空")
     @ApiModelProperty(value = "小区详细地址")
     private String detailAddress;
 
-    @ApiModelProperty(value = "创建人id")
+    @Null
+    @ApiModelProperty(value = "创建人id", hidden = true)
     private Integer creatorId;
 
 
