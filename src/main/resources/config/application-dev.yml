@@ -6,3 +6,5 @@ spring:
     password: chn971229
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+logging:
+  config: classpath:log/log4j-dev.xml

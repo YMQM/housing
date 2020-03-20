@@ -1,5 +1,6 @@
 package priv.ymqm.housing.common.advice;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import priv.ymqm.housing.domain.vo.res.R;
  * @author chenhonnian
  * @since 2020/03/19
  */
+@Slf4j
 @ControllerAdvice
 public class GlobalControllerExceptionAdvice {
 
@@ -26,13 +28,16 @@ public class GlobalControllerExceptionAdvice {
     @ExceptionHandler(HousingException.class)
     @ResponseBody
     public R<Object> handleUserException(HousingException ex) {
-        return R.error().code(ex.getCode()).exMsg(ex.getMessage());
+        return R.error()
+                .code(ex.getCode())
+                .userMsg(ex.getMessage())
+                .exMsg(ex.getExMsg());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public R<Object> handlerUnknownException(Exception ex) {
-        // todo log error info
+        log.error("服务器内部异常", ex);
         return R.error().exMsg(ex.toString());
     }
 }
