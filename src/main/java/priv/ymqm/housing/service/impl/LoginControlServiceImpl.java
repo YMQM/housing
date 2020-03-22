@@ -111,13 +111,15 @@ public class LoginControlServiceImpl implements LoginControlService {
 
     @Override
     public boolean isRightVerifyCode(String requestKey, String verifyCode) {
-        String redisKey = LOGIN_VERIFY_CODE_REDIS_KEY + ":" + requestKey;
+        String redisKey = redisKey(LOGIN_VERIFY_CODE_REDIS_KEY, requestKey);
         String savedVerifyCode = redisTemplate.opsForValue().get(redisKey);
         if (savedVerifyCode == null) {
             throw new HousingException("验证码过期，请重新获取验证码");
         }
-        boolean isPassVerify = Objects.equals(savedVerifyCode, verifyCode);
-        redisTemplate.delete(redisKey);
+        boolean isPassVerify = StringUtils.containsIgnoreCase(savedVerifyCode, verifyCode);
+        if (isPassVerify) {
+            redisTemplate.delete(redisKey);
+        }
         return isPassVerify;
     }
 
