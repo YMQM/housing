@@ -2,6 +2,7 @@ package priv.ymqm.housing.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020/03/22
  */
 @Slf4j
+@Profile("prod")
 @Service
 public class CurrentRequestServiceImpl implements CurrentRequestService {
 

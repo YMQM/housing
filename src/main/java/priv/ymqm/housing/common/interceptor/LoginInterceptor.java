@@ -46,13 +46,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader(REQUEST_HEADER_TOKEN_NAME);
+        String token = currentRequestService.currentRequestToken();
         if (token == null) {
             writeResponse(response, NO_TOKEN_RES);
             return false;
         }
-        token = token.trim();
-        AdminAccount adminAccount = loginControlService.getAccountByToken(token);
+        AdminAccount adminAccount = currentRequestService.currentLoginUser();
         if (adminAccount == null) {
             writeResponse(response, TOKEN_EXPIRE_RES);
             return false;
