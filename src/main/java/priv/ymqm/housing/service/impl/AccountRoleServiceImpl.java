@@ -6,6 +6,8 @@ import priv.ymqm.housing.service.AccountRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户角色分配关联表 服务实现类
@@ -17,4 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountRoleServiceImpl extends ServiceImpl<AccountRoleMapper, AccountRole> implements AccountRoleService {
 
+    @Override
+    public boolean setAccountRoles(Integer accountId, List<Integer> roleIds) {
+        return false;
+    }
 }

@@ -44,14 +44,14 @@ public class AdminAccount extends Model<AdminAccount> {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "密码加盐")
+    private String salt;
+
     @ApiModelProperty(value = "备注信息")
     private String remark;
 
-    @ApiModelProperty(value = "角色id")
-    private Integer roleId;
-
     @ApiModelProperty(value = "账号是否启用")
-    private Boolean isActive;
+    private Integer state;
 
     @ApiModelProperty(value = "创建时间戳")
     private Long createTimestamp;

@@ -24,6 +24,11 @@ public class R<T> {
     private R() {
     }
 
+    public static <T> R<T> ok(T data, String userMsg) {
+        R<T> res = ok();
+        return res.data(data).userMsg(userMsg);
+    }
+
     public static <T> R<T> ok(T data) {
         R<T> res = ok();
         return res.data(data);

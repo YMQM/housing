@@ -58,15 +58,16 @@ create table `house_picking_tip_tag`(
 /*
   权限相关
 */
+DROP TABLE IF EXISTS `admin_account`;
 create table `admin_account`(
     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键自增',
     `user_name` varchar(32) NOT NULL COMMENT '姓名',
     `email` varchar(24) NOT NULL COMMENT '邮箱',
     `phone_number` char(11) NOT NULL COMMENT '手机号',
     `password` char(128) NOT NULL COMMENT '密码',
+    `salt` char(128) NOT NULL COMMENT '密码加盐',
     `remark` varchar(128) NOT NULL COMMENT '备注信息',
-    `role_id` int NOT NULL COMMENT '角色id',
-    `is_active` bit NOT NULL COMMENT '账号是否启用',
+    `state` tinyint NOT NULL COMMENT '账号状态',
     `create_timestamp` bigint NOT NULL COMMENT '创建时间戳',
     `last_login` bigint COMMENT '最后登录时间',
     `is_del` bit NOT NULL COMMENT '逻辑删除',

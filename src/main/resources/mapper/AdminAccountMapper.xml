@@ -4,17 +4,60 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="priv.ymqm.housing.domain.po.AdminAccount">
-        <id column="id" property="id" />
-        <result column="user_name" property="userName" />
-        <result column="email" property="email" />
-        <result column="phone_number" property="phoneNumber" />
-        <result column="password" property="password" />
-        <result column="remark" property="remark" />
-        <result column="role_id" property="roleId" />
-        <result column="is_active" property="isActive" />
-        <result column="create_timestamp" property="createTimestamp" />
-        <result column="last_login" property="lastLogin" />
-        <result column="is_del" property="isDel" />
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <result column="create_timestamp" property="createTimestamp"/>
+        <result column="last_login" property="lastLogin"/>
+        <result column="is_del" property="isDel"/>
     </resultMap>
+
+    <resultMap id="accountDetailResultMap" type="priv.ymqm.housing.domain.vo.account.AccountDetailVO">
+        <id column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="email" property="email"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <result column="create_timestamp" property="createTimestamp"/>
+        <result column="last_login" property="lastLogin"/>
+        <collection property="roles" ofType="priv.ymqm.housing.domain.vo.RoleListVO">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="roleName"/>
+            <result column="unique_key" property="uniqueKey"/>
+        </collection>
+    </resultMap>
+
+    <select id="searchPage" parameterType="priv.ymqm.housing.domain.dto.account.QueryAdminAccountDTO"
+            resultMap="accountDetailResultMap">
+        SELECT
+        ac.*,
+        role.id AS role_id,
+        role.role_name,
+        role.unique_key
+        FROM
+        admin_account AS ac
+        LEFT JOIN account_role AS ar ON ar.account_id = ac.id
+        LEFT JOIN role ON role.id = ar.role_id
+        <where>
+            <if test="queryDto.state != null">
+                state = #{queryDto.state},
+            </if>
+            <if test="queryDto.id != null">
+                id = #{queryDto.id}}
+            </if>
+            <if test="queryDto.name != null and queryDto.name != '' ">
+                name = #{queryDto.name}
+            </if>
+            <if test="queryDto.roleId != null">
+                account_role.role_id = #{queryDto.roleId}
+            </if>
+        </where>
+    </select>
 
 </mapper>
