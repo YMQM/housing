@@ -6,5 +6,15 @@ spring:
     password: chn971229
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+
+  redis:
+    host: localhost
+    timeout: 5000ms
+    port: 6379
+    lettuce:
+      pool:
+        max-wait: 5000ms
+
 logging:
   config: classpath:log/log4j-dev.xml
+
