@@ -35,6 +35,9 @@ public class RequestBodyParamCheckAdvice {
     public void checkParam(JoinPoint joinPoint) {
         Class<?> group = getValidationGroup(joinPoint);
         Object validateArg = getValidationArgObj(joinPoint);
+        if (validateArg == null) {
+            return;
+        }
         Map<String, String> validateMapResult = ValidatorUtil.validate(validateArg, group);
         if (validateMapResult.size() > 0) {
             String payload = JSON.toJSONString(validateMapResult);
