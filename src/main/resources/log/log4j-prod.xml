@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2006-2017, Yunnan Sanjiu Network technology Co., Ltd.
+  ~
+  ~ All rights reserved.
+  -->
+<!-- Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，
+     你会看到log4j2内部各种详细输出。可以设置成OFF(关闭) 或 Error(只输出错误信息)。
+     30s 刷新此配置
+-->
+
+<!-- 打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL ?  OFF 默认是DEBUG -->
+<configuration status="WARN" monitorInterval="30">
+
+    <!-- 日志文件目录、压缩文件目录、日志格式配置 -->
+    <properties>
+        <Property name="log.main-package">priv.ymqm.housing</Property>
+
+        <!-- 以下的配置项 无特殊情况 不需调整-->
+        <Property name="PID">????</Property>
+        <Property name="LOG_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx
+        </Property>
+    </properties>
+    <Appenders>
+        <!-- 输出控制台日志的配置 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+    </Appenders>
+
+    <!-- Mixed sync/async -->
+    <Loggers>
+        <AsyncRoot level="info" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncRoot>
+        <logger name="${log.main-package}" level="WARN"/>
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="com.baomidou" level="WARN"/>
+        <logger name="org.mybatis" level="WARN"/>
+    </Loggers>
+
+</configuration>
