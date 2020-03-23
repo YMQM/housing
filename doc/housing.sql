@@ -84,16 +84,24 @@ create table `role` (
     primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '角色表';
 
-create table `permission`(
-    `id` int NOT NULL AUTO_INCREMENT COMMENT '主键自增',
-    `name` varchar(32) NOT NULL COMMENT '权限名称',
-    `unique_key` varchar(128) NOT NULL COMMENT '权限唯一标识',
-    `desc` varchar(32) COMMENT '权限描述',
-    `url` varchar(128) COMMENT '匹配的请求地址',
-    `is_need_check` bit NOT NULL COMMENT '是否需要和用户持有权限做匹配',
-    `create_time` bigint NOT NULL COMMENT '创建时间戳',
-    primary key (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '权限明细表';
+DROP TABLE IF EXISTS `permission`;
+create table `permission`
+(
+    `id`            int          NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+    `name`          varchar(128) NOT NULL COMMENT '权限名称',
+    `unique_key`    varchar(128) NOT NULL COMMENT '权限唯一标识',
+    `detail`        varchar(32) COMMENT '权限描述',
+    `url`           varchar(128) COMMENT '匹配的请求地址',
+    `is_need_check` bit          NOT NULL COMMENT '是否需要和用户持有权限做匹配',
+    `parent_id`     int COMMENT '父级id',
+    `is_leaf`       bit          NOT NULL COMMENT '是否为叶子权限节点',
+    `tree_path`     varchar(32)  NOT NULL COMMENT '树结构路径',
+    `create_time`   bigint       NOT NULL COMMENT '创建时间戳',
+    primary key (`id`),
+    unique key unique_key_permission_url (`url`),
+    unique key unique_key_permission_uk (`unique_key`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT '权限明细表';
 
 create table `role_permission`(
     `id` int NOT NULL AUTO_INCREMENT COMMENT '主键自增',

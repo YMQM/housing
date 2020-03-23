@@ -7,10 +7,13 @@
         <id column="id" property="id" />
         <result column="name" property="name" />
         <result column="unique_key" property="uniqueKey" />
-        <result column="desc" property="desc" />
+        <result column="desc" property="detail" />
         <result column="url" property="url" />
         <result column="is_need_check" property="isNeedCheck" />
         <result column="create_time" property="createTime" />
+        <result column="parent_id" property="parentId" />
+        <result column="is_leaf" property="isLeaf" />
+        <result column="tree_path" property="treePath" />
     </resultMap>
 
 </mapper>
