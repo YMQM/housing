@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-03-19
  */
 public interface PermissionService extends IService<Permission> {
+    void scanPermissionTag();
 
+    boolean savePermission(Permission permission);
 }
