@@ -37,7 +37,7 @@
         <AsyncRoot level="info" includeLocation="true">
             <AppenderRef ref="console"/>
         </AsyncRoot>
-        <logger name="${log.main-package}" level="WARN"/>
+        <logger name="${log.main-package}" level="DEBUG"/>
         <logger name="org.springframework" level="WARN"/>
         <logger name="com.baomidou" level="WARN"/>
         <logger name="org.mybatis" level="WARN"/>
