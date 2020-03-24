@@ -2,6 +2,7 @@ package priv.ymqm.housing.service;
 
 import priv.ymqm.housing.domain.po.AccountRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import priv.ymqm.housing.domain.po.Role;
 
 import java.util.List;
 
@@ -24,5 +25,9 @@ public interface AccountRoleService extends IService<AccountRole> {
      */
     boolean setAccountRoles(Integer accountId, List<Integer> roleIds);
 
+
+    List<Integer> listRoleIdsByUserId(Integer userId);
+
+    List<Role> listRolesByUserId(Integer userId);
 
 }

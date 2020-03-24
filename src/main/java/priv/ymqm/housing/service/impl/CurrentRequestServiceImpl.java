@@ -7,10 +7,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import priv.ymqm.housing.domain.po.AdminAccount;
+import priv.ymqm.housing.domain.po.Permission;
+import priv.ymqm.housing.domain.po.Role;
+import priv.ymqm.housing.service.AccountRoleService;
 import priv.ymqm.housing.service.CurrentRequestService;
 import priv.ymqm.housing.service.LoginControlService;
+import priv.ymqm.housing.service.RolePermissionService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  * @author chenhonnian
@@ -23,6 +28,12 @@ public class CurrentRequestServiceImpl implements CurrentRequestService {
 
     @Autowired
     private LoginControlService loginControlService;
+
+    @Autowired
+    private AccountRoleService accountRoleService;
+
+    @Autowired
+    private RolePermissionService rolePermissionService;
 
     private static final String REQUEST_HEADER_TOKEN_NAME = "Authorization";
 
@@ -55,6 +66,30 @@ public class CurrentRequestServiceImpl implements CurrentRequestService {
         HttpServletRequest request = getCurrentRequest();
         String token = request.getHeader(REQUEST_HEADER_TOKEN_NAME);
         return token;
+    }
+
+    @Override
+    public Set<Role> currentUserRoles() {
+        AdminAccount adminAccount = currentLoginUser();
+        if(adminAccount == null) {
+            return Collections.emptySet();
+        }
+        List<Role> userRoles = accountRoleService.listRolesByUserId(adminAccount.getId());
+        return new HashSet<>(userRoles);
+    }
+
+    @Override
+    public Set<Permission> currentUserPermissions() {
+        AdminAccount account = currentLoginUser();
+        if (account == null) {
+            return Collections.emptySet();
+        }
+        List<Integer> roleIds = accountRoleService.listRoleIdsByUserId(account.getId());
+        if (roleIds == null || roleIds.isEmpty()) {
+            return Collections.emptySet();
+        }
+        Set<Permission> permissions = rolePermissionService.listPermitsByRoleIds(roleIds);
+        return permissions;
     }
 
     @Override

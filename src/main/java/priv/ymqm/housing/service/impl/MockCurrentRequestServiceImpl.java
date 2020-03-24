@@ -4,7 +4,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import priv.ymqm.housing.common.enums.AccountStateEnum;
 import priv.ymqm.housing.domain.po.AdminAccount;
+import priv.ymqm.housing.domain.po.Permission;
+import priv.ymqm.housing.domain.po.Role;
 import priv.ymqm.housing.service.CurrentRequestService;
+
+import java.util.Set;
 
 /**
  * @author chenhonnian
@@ -37,6 +41,16 @@ public class MockCurrentRequestServiceImpl implements CurrentRequestService {
     @Override
     public String currentRequestToken() {
         return "TEST_TOKEN_FOR_DEV";
+    }
+
+    @Override
+    public Set<Role> currentUserRoles() {
+        return null;
+    }
+
+    @Override
+    public Set<Permission> currentUserPermissions() {
+        return null;
     }
 
     @Override

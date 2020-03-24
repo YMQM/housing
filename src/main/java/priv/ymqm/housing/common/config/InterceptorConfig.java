@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import priv.ymqm.housing.common.interceptor.LoginInterceptor;
+import priv.ymqm.housing.common.interceptor.PermissionInterceptor;
 
 /**
  * @author chenhonnian
@@ -17,10 +18,18 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private PermissionInterceptor permissionInterceptor;
+
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         String[] excludeResourcePaths = {"/swagger-ui.html/**", "/swagger-resources/**", "/webjars/**", "/api-docs/**"};
         registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/loginController/**")
+                .excludePathPatterns(excludeResourcePaths);
+
+        registry.addInterceptor(permissionInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/loginController/**")
                 .excludePathPatterns(excludeResourcePaths);

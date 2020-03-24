@@ -1,7 +1,8 @@
 package priv.ymqm.housing.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
-import org.springframework.beans.BeansException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -120,7 +121,16 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext)  {
+    public Permission getPermissionByUri(String uri) {
+        if (StringUtils.isBlank(uri)) {
+            return null;
+        }
+        Permission permission = this.getOne(new LambdaQueryWrapper<Permission>().eq(Permission::getUrl, uri), true);
+        return permission;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.context = applicationContext;
     }
 

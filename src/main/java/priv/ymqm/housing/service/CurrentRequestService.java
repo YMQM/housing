@@ -1,6 +1,11 @@
 package priv.ymqm.housing.service;
 
 import priv.ymqm.housing.domain.po.AdminAccount;
+import priv.ymqm.housing.domain.po.Permission;
+import priv.ymqm.housing.domain.po.Role;
+
+import java.util.List;
+import java.util.Set;
 
 public interface CurrentRequestService {
     /**
@@ -23,6 +28,10 @@ public interface CurrentRequestService {
      * @return 请求TOKEN
      */
     String currentRequestToken();
+
+    Set<Role> currentUserRoles();
+
+    Set<Permission> currentUserPermissions();
 
     /**
      * 将当前登录用户保存在ThreadLocal中，在拦截器成功拦截token后设置

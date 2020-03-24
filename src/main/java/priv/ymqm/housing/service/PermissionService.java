@@ -15,4 +15,6 @@ public interface PermissionService extends IService<Permission> {
     void scanPermissionTag();
 
     boolean savePermission(Permission permission);
+
+    Permission getPermissionByUri(String uri);
 }
